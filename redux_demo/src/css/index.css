@@ -1,0 +1,20 @@
+h1 {
+    color: red;
+}
+body {
+    background-image: url('../images/ocean1.jpg');
+}
+.mar_t_8 {
+    margin-top: 8rem;
+}
+.label_card{
+    margin-top: 10rem;
+    color: white;
+    background: transparent !important;
+}
+hr{
+    background: white;
+}
+ .validate {
+    margin-bottom: 1.9rem !important;
+}
