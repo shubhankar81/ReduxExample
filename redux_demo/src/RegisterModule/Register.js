@@ -1,9 +1,29 @@
-import React from "react";
+import React, { useState } from "react";
 import { MDBContainer, MDBRow, MDBCol, MDBCard, MDBCardBody, MDBInput, MDBBtn, MDBIcon, MDBModalFooter } from 'mdbreact';
 
-const Register = () => {
+import { connect } from 'react-redux';
+import { setUser } from '../redux_file/action_dispatch';
+const Register = (props) => {
+
+  // const [formData, setFormData] = user;
+  const onChange = e =>   { 
+    props.setUser(e.target.value, e.target.name)
+  }
+  //setFormData({ ...formData, [e.target.name] : e.target.value })
+
+  const onSubmitForm = e => {
+    e.preventDefault()
+    e.target.className += " was-validated";
+    console.log("State data", props.user)
+  }
+
   return (
     <MDBContainer>
+       <form
+          className="needs-validation"
+          onSubmit={onSubmitForm}
+          noValidate
+        >
       <MDBRow>
         <MDBCol md="7" className="mar_t_8">
           <MDBCard className="label_card">
@@ -27,43 +47,79 @@ const Register = () => {
               <MDBInput
                 label="User Name"
                 group
+                name="user_name"
                 type="text"
+                onChange={e => onChange(e)}
                 validate
                 error="wrong"
                 success="right"
+                required
               />
+               <div className="invalid-feedback">
+                Please provide a valid username.
+              </div>
+              <div className="valid-feedback">Looks good!</div>
               <MDBInput
                 label="Mob. No."
                 group
+                name="mob_no"
+                onChange={e => onChange(e)}
                 type="number"
                 length={10}
                 validate
                 containerClass="mb-0"
+                required
               />
+               <div className="invalid-feedback">
+                Please provide a valid Mobile No.
+              </div>
+              <div className="valid-feedback">Looks good!</div>
               <MDBInput
                 label="Email"
+                name="email"
+                onChange={e => onChange(e)}
                 group
                 type="email"
                 validate
                 containerClass="mb-0"
+                required
               />
+               <div className="invalid-feedback">
+                Please provide a valid Email.
+              </div>
+              <div className="valid-feedback">Looks good!</div>
               <MDBInput
                 label="Password"
                 group
+                name="password"
+                onChange={e => onChange(e)}
                 type="password"
                 validate
                 containerClass="mb-0"
+                required
               />
+               <div className="invalid-feedback">
+                Please provide a valid Password.
+              </div>
+              <div className="valid-feedback">Looks good!</div>
+              
               <MDBInput
                 label="Confirm Password"
                 group
+                name="confrm_password"
+                onChange={e => onChange(e)}
                 type="password"
                 validate
                 containerClass="mb-0"
+                required
               />
+               <div className="invalid-feedback">
+                Please provide a same Password.
+              </div>
+              <div className="valid-feedback">Looks good!</div>
               <div className="text-center mb-3">
                 <MDBBtn
-                  type="button"
+                  type="submit"
                   gradient="blue"
                   rounded
                   className="btn-block z-depth-1a"
@@ -84,8 +140,12 @@ const Register = () => {
           </MDBCard>
         </MDBCol>
       </MDBRow>
+      </form>
     </MDBContainer>
   );
 };
+const mapStateToProps = state => ({
+  user : state.register_reducer
+})
 
-export default Register;
+export default connect(mapStateToProps, {setUser})(Register);
